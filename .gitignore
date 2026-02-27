@@ -5,3 +5,32 @@ __pycache__/
 /venv
 venv
 /venv/
+
+#----new commit
+
+#python
+*.py[cod]
+*.so
+
+#django
+*.log
+db.sqlite3
+media/
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Environment variables
+.env
+
+# Static / collected files
+staticfiles/
+
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
