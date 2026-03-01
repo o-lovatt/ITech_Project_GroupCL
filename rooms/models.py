@@ -20,14 +20,14 @@ class Room(models.Model):
     #this isnt working needs to be a tuple ??
     #FIXED
 
-    room_no = models.CharField(max_length = 3, unique = True)
+    room_number = models.CharField(max_length = 3, unique = True)
 
     room_status = models.CharField(max_length = 20, choices= STATUS, default = "Available")
     room_type = models.ForeignKey(RoomType, on_delete = models.CASCADE)
     
 
     def __str__(self):
-        return (f"Room: {self.room_no}")
+        return (f"Room: {self.room_number}")
 
 
         
