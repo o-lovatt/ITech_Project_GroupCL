@@ -30,6 +30,7 @@ class Booking(models.Model):
         #now excluding cancelled bookings 
 
         #this still causes an edge case error, cant save a booking if it's been switched back to cancelled
+        #all_bookings = Booking.objects.filter(room = self.room, booking_status = ("reserved" or "checked_in")) #this didnt work
         
         if self.pk:#this should let you update an existing booking 
             all_bookings = all_bookings.exclude(pk = self.pk) 
@@ -42,3 +43,5 @@ class Booking(models.Model):
                 raise ValidationError("This room has already been booked for these dates.")
             #need to include alllowing booking for a cancelled room
             #^now implemented
+
+#REMEMBER UNIT TESTS!!!!!!!

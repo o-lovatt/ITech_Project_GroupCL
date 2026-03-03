@@ -22,7 +22,7 @@ class Room(models.Model):
 
     room_number = models.CharField(max_length = 3, unique = True)
 
-    room_status = models.CharField(max_length = 20, choices= STATUS, default = "Available")
+    room_status = models.CharField(max_length = 20, choices= STATUS, default = "available")#captial A was a problem
     room_type = models.ForeignKey(RoomType, on_delete = models.CASCADE)
     
 
