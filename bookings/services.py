@@ -8,7 +8,8 @@ def show_available_rooms(check_in_date, check_out_date):
 
     for room in every_room:
 
-        reserved_booking = Booking.objects.filter(room = room, booking_status = ["reserved", "checked_in"])
+        reserved_booking = Booking.objects.filter(room = room, booking_status__in = ["reserved", "checked_in"])
+        #this was breaking the available rooms, needed to be booking_status__in
         overlap = False
 
         for booking in reserved_booking:
