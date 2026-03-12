@@ -1,9 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
 <h1>View Bookings</h1>
 {% if bookings %}
 <ul>
     {% for booking in bookings%}
         <li>
-            Room{{booking.room.room_number}} | {{booking.check_in_date}} to {{booking.check_out_date}} | {{booking.booking_status}}
+            Room {{ booking.room.room_number }} | User: {{ booking.user.username }} |
+            {{ booking.check_in_date }} to {{ booking.check_out_date }} | {{ booking.booking_status }}
+            
+            {% if request.user.role and request.user.role.role_name in "admin receptionist" %}
+                <br>
+                <a href="{% url 'change_booking_status' booking.id 'checked_in' %}" >Check In</a>
+                <a href = "{% url 'change_booking_status' booking.id 'checked_out' %}" >Check Out</a>
+                <a href="{% url 'change_booking_status' booking.id 'cancelled' %}">Cancel</a>
+            {% endif %}
+
         </li>
         {% endfor %}
 
@@ -13,5 +26,4 @@
 {%endif%}
 
 
-<br>
-<a href="{% url 'search_rooms' %}">Search Available Rooms</a>
+{% endblock %}
