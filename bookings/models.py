@@ -44,4 +44,12 @@ class Booking(models.Model):
             #need to include alllowing booking for a cancelled room
             #^now implemented
 
-#REMEMBER UNIT TESTS!!!!!!!
+        #REMEMBER UNIT TESTS!!!!!!!
+    
+    
+    
+    def save(self, *args, **kwargs): #this method should stop the double booking in view
+        self.full_clean()
+        super().save(*args, **kwargs)
+        #forgot the brackets, fixed now
+    

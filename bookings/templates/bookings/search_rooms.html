@@ -1,0 +1,30 @@
+<h1>Search Available Rooms</h1>
+<form method = "get">
+    <label>Check In:</label>
+    <input type = "date" name = "check_in">
+    <label>Check Out:</label>
+    <input type = "date" name = "check_out">
+
+    <button type = "submit"> Search</button>
+</form>
+
+<hr>
+<h2> Available Rooms </h2>
+
+{% if rooms %}
+<ul>
+    {% for room in rooms %}
+        <li>
+            Room {{ room.room_number }}</li>
+            <a href="{% url 'create_booking' room.id %}?check_in={{ request.GET.check_in }}&check_out={{ request.GET.check_out }}">Book</a>
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No rooms available.</p>
+{% endif %}
+
+
+<br>
+<a href="{% url 'view_bookings' %}">View Current Bookings</a>
+

@@ -1,0 +1,17 @@
+<h1>View Bookings</h1>
+{% if bookings %}
+<ul>
+    {% for booking in bookings%}
+        <li>
+            Room{{booking.room.room_number}} | {{booking.check_in_date}} to {{booking.check_out_date}} | {{booking.booking_status}}
+        </li>
+        {% endfor %}
+
+</ul>
+{%else%}
+<p>No Bookings</p>
+{%endif%}
+
+
+<br>
+<a href="{% url 'search_rooms' %}">Search Available Rooms</a>

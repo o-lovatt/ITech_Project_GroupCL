@@ -16,7 +16,7 @@ class RoomType(models.Model):
 
 class Room(models.Model):
 
-    STATUS = [("available", "Available"), ("occupided", "Occupied"), ("maintenence", "Maintenance")]
+    STATUS = [("available", "Available"), ("occupied", "Occupied"), ("maintenence", "Maintenance")]
     #this isnt working needs to be a tuple ??
     #FIXED
 
