@@ -1,9 +1,18 @@
-# Python
+db.sqlite3
 __pycache__/
+**/__pycache__/
+*.pyc
+/venv
+venv
+/venv/
+
+#----new commit
+
+#python
 *.py[cod]
 *.so
 
-# Django
+#django
 *.log
 db.sqlite3
 media/
