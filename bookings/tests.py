@@ -4,7 +4,11 @@ from rooms.models import Room, RoomType
 from bookings.models import Booking
 from django.core.exceptions import ValidationError
 from datetime import date
+<<<<<<< HEAD
 from bookings.services import show_available_rooms
+=======
+from accounts.models import Role
+>>>>>>> dev
 # Create your tests here
 user_model = get_user_model()
 
@@ -67,6 +71,54 @@ class BookeingTest(TestCase):
         self.assertNotIn(self.room, available_rooms)
 
 
+    def test_search_bookings_page(self):
+        response = self.client.get("/bookings/search/")
+        self.assertEqual(response.status_code, 200)
+
+
+
+    def test_view_bookings_page(self):
+        self.client.force_login(self.user)
+        response = self.client.get("/bookings/view_bookings/")
+        self.assertEqual(response.status_code, 200)
+
+
+class BookingViewTest(TestCase):
+    def setUp(self):
+        #create roles
+        self.admin_role = Role.objects.create(role_name = "admin")
+        self.receptionist_role = Role.objects.create(role_name = "receptionist")
+        self.guest_role = Role.objects.create(role_name = "guest")
+        #create users
+        self.admin_user = user_model.objects.create_user(username = "admin_user", password = "password", role = self.admin_role)
+        self.receptionist_user = user_model.objects.create_user(username = "receptionist_user", password = "password", role = self.receptionist_role)
+        self.guest_user = user_model.objects.create_user(username = "guest_user", password = "password", role = self.guest_role)
+        #create room type
+        self.room_type = RoomType.objects.create(room_type_name = "Single", price_per_night = 80.00, max_occupancy = 1)
+        #create room
+        self.room = Room.objects.create(room_number = "101", room_status = "available", room_type = self.room_type)
+        #create booking
+        self.booking = Booking.objects.create(user = self.guest_user, room = self.room, check_in_date = date(2026, 4, 10), check_out_date = date(2026, 4, 17), booking_status = "reserved")
+
+
+    def guest_cant_change_booking_status(self):
+        self.client.force_login(self.guest_user)
+        response = self.client.get(f"/bookings/change_booking_status/{self.booking.id}/checked_in/")
+        self.booking.refresh_from_db()#refresh for latest booking
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(self.booking.booking_status, "reserved")
+
+#tests to add:
+# - booking creation redirects correctly
+# - changing booking status works for allowed users
+# - receptionist/admin can change a booking to checked_in a normal user cannot
+
+
 #CHECK ALL OF THESE ARE ACTUALLY OK!!!
+<<<<<<< HEAD
 #all currently working
+=======
+#all currently pass
+>>>>>>> dev
     
