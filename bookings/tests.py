@@ -4,6 +4,7 @@ from rooms.models import Room, RoomType
 from bookings.models import Booking
 from django.core.exceptions import ValidationError
 from datetime import date
+from bookings.services import show_available_rooms
 # Create your tests here
 user_model = get_user_model()
 
@@ -37,13 +38,12 @@ class BookeingTest(TestCase):
     #test bookings can't overlap
     def test_booking_overlap(self):
         #original booking
-        test_booking1 = Booking.objects.create(user = self.user, room = self.room, check_in_date = date(2026, 3, 3), check_out_date = date(2026, 3, 10))
+        Booking.objects.create(user = self.user, room = self.room, check_in_date = date(2026, 3, 3), check_out_date = date(2026, 3, 10))
 
-        #overlappingbooking
-        test_booking2 = Booking.objects.create(user = self.user, room = self.room, check_in_date = date(2026, 3, 3), check_out_date = date(2026, 3, 10))
+        overlapping_booking = Booking(user = self.user, room = self.room, check_in_date = date(2026, 3, 3), check_out_date = date(2026, 3, 10))
 
         with self.assertRaises(ValidationError):
-            test_booking2.clean()
+            overlapping_booking.full_clean()
         
 
 
@@ -60,10 +60,13 @@ class BookeingTest(TestCase):
 
     def test_available_rooms(self):
         #available 
-        available_room = Booking.objects.create(user = self.user, room = self.room, check_in_date = date(2026, 3, 3), check_out_date = date(2026, 3, 10), booking_status = "available")
-            #not sure how to structure this fully ?? will need to properly add later when checking available rooms is possible
+        Booking.objects.create(user=self.user, room=self.room, check_in_date=date(2026, 3, 3), check_out_date=date(2026, 3, 10), booking_status="reserved")
 
+        available_rooms = show_available_rooms(date(2026, 3, 4), date(2026, 3, 5))
+
+        self.assertNotIn(self.room, available_rooms)
 
 
 #CHECK ALL OF THESE ARE ACTUALLY OK!!!
+#all currently working
     
