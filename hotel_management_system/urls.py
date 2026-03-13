@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.http import HttpResponse
+#from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def home(request):
-    return HttpResponse("Hotel Management System is live ✅")
+    return render(request, "home.html") #links to the actual website now
 
 
 urlpatterns = [

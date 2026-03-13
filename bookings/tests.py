@@ -4,11 +4,8 @@ from rooms.models import Room, RoomType
 from bookings.models import Booking
 from django.core.exceptions import ValidationError
 from datetime import date
-<<<<<<< HEAD
 from bookings.services import show_available_rooms
-=======
 from accounts.models import Role
->>>>>>> dev
 # Create your tests here
 user_model = get_user_model()
 
@@ -116,9 +113,5 @@ class BookingViewTest(TestCase):
 
 
 #CHECK ALL OF THESE ARE ACTUALLY OK!!!
-<<<<<<< HEAD
 #all currently working
-=======
-#all currently pass
->>>>>>> dev
     
