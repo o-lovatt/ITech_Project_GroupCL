@@ -1,0 +1,213 @@
+:root {
+    --brand-ink: #17324d;
+    --brand-accent: #c26a2d;
+    --brand-accent-dark: #9d501d;
+    --brand-surface: #f5efe6;
+    --brand-bg: #f8fafc;
+    --brand-border: #d7e0ea;
+    --text-muted: #5a6a7a;
+    --focus-ring: rgba(194, 106, 45, 0.35);
+}
+
+body.site-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background:
+        radial-gradient(circle at top right, rgba(194, 106, 45, 0.10), transparent 28%),
+        linear-gradient(180deg, #fdfdfd 0%, var(--brand-bg) 100%);
+    color: #1d2a36;
+    font-family: "Source Sans 3", sans-serif;
+}
+
+h1, h2, h3, h4, .brand-mark {
+    font-family: "Fraunces", serif;
+}
+
+.site-header {
+    background: linear-gradient(135deg, #17324d, #274d72);
+}
+
+.site-footer {
+    margin-top: auto;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.brand-mark {
+    color: #fff;
+    font-size: 1.5rem;
+    letter-spacing: 0.02em;
+}
+
+.brand-mark:hover,
+.brand-mark:focus {
+    color: #fff;
+}
+
+.navbar .nav-link {
+    color: rgba(255, 255, 255, 0.88);
+    border-radius: 999px;
+    padding-inline: 0.95rem;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus,
+.navbar .nav-link.active {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.btn-accent {
+    background-color: var(--brand-accent);
+    border-color: var(--brand-accent);
+    color: #fff;
+}
+
+.btn-accent:hover,
+.btn-accent:focus {
+    background-color: var(--brand-accent-dark);
+    border-color: var(--brand-accent-dark);
+    color: #fff;
+}
+
+.hero-card,
+.feature-card,
+.info-panel,
+.empty-state {
+    background-color: rgba(255, 255, 255, 0.92);
+    border: 1px solid var(--brand-border);
+}
+
+.hero-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-card::after {
+    content: "";
+    position: absolute;
+    inset: auto -3rem -3rem auto;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(194, 106, 45, 0.26), rgba(194, 106, 45, 0));
+}
+
+.eyebrow {
+    display: inline-block;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    background-color: var(--brand-surface);
+    color: var(--brand-ink);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.room-meta {
+    display: grid;
+    gap: 0.9rem;
+    margin: 0;
+}
+
+.room-meta dt {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.room-meta dd {
+    margin: 0.15rem 0 0;
+    font-weight: 600;
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: 1px solid transparent;
+}
+
+.status-reserved {
+    color: #7a4a00;
+    background-color: #fff1d6;
+    border-color: #f2d18b;
+}
+
+.status-checked-in {
+    color: #0d5c3c;
+    background-color: #dcf7e7;
+    border-color: #98d7b5;
+}
+
+.status-checked-out {
+    color: #35506b;
+    background-color: #e5eef8;
+    border-color: #bad1ec;
+}
+
+.status-cancelled {
+    color: #8b1d2c;
+    background-color: #fde7eb;
+    border-color: #f2b8c0;
+}
+
+.skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -3rem;
+    z-index: 1050;
+    background-color: #fff;
+    color: var(--brand-ink);
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.skip-link:focus {
+    top: 1rem;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.btn:focus-visible,
+.form-control:focus,
+.form-select:focus {
+    outline: 3px solid transparent;
+    box-shadow: 0 0 0 0.2rem var(--focus-ring);
+}
+
+.table > :not(caption) > * > * {
+    padding: 1rem;
+}
+
+#date-range-feedback.is-valid {
+    color: #0d5c3c;
+}
+
+#date-range-feedback.is-invalid {
+    color: #8b1d2c;
+}
+
+@media (max-width: 575.98px) {
+    main.container {
+        padding-inline: 1rem;
+    }
+
+    .hero-card,
+    .feature-card,
+    .info-panel,
+    .empty-state,
+    .card-body {
+        border-radius: 1.25rem;
+    }
+}

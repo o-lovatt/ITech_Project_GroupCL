@@ -1,34 +1,111 @@
 {% extends "base.html" %}
 
+{% block title %}Search Rooms | Hotel Management System{% endblock %}
+
 {% block content %}
+<section class="mb-4">
+    <p class="eyebrow mb-2">Booking Search</p>
+    <h1 class="mb-3">Search available rooms</h1>
+    <p class="text-muted mb-0">Choose your check-in and check-out dates to review room availability and create a booking.</p>
+</section>
 
-<h1>Search Available Rooms</h1>
-<form method = "get">
-    <label>Check In:</label>
-    <input type = "date" name = "check_in" value = "{{check_in}}">
-    <label>Check Out:</label>
-    <input type = "date" name = "check_out" value = "{{check_out}}">
+<section class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-body p-4">
+        <form method="get" class="row g-3 align-items-end" data-booking-form novalidate aria-describedby="date-range-help date-range-feedback">
+            <div class="col-md-5">
+                <label class="form-label" for="check-in-date">Check-in date</label>
+                <input
+                    type="date"
+                    name="check_in"
+                    id="check-in-date"
+                    value="{{ check_in }}"
+                    class="form-control"
+                    aria-describedby="check-in-help date-range-feedback"
+                    required
+                >
+                <div id="check-in-help" class="form-text">Select the first day of your stay.</div>
+            </div>
 
-    <button type = "submit"> Search</button>
-</form>
+            <div class="col-md-5">
+                <label class="form-label" for="check-out-date">Check-out date</label>
+                <input
+                    type="date"
+                    name="check_out"
+                    id="check-out-date"
+                    value="{{ check_out }}"
+                    class="form-control"
+                    aria-describedby="check-out-help date-range-feedback"
+                    required
+                >
+                <div id="check-out-help" class="form-text">Check-out must be after check-in.</div>
+            </div>
 
+            <div class="col-md-2 d-grid">
+                <button type="submit" class="btn btn-accent">Search</button>
+            </div>
 
-<hr>
-<h2> Available Rooms </h2>
+            <div class="col-12">
+                <p id="date-range-help" class="form-text mb-0">After searching, available rooms will appear below with one-click booking links.</p>
+                <div id="date-range-feedback" class="small mt-2" aria-live="polite"></div>
+            </div>
+        </form>
+    </div>
+ </section>
 
-{% if rooms %}
-<ul>
-    {% for room in rooms %}
-        <li>
-            Room {{ room.room_number }}
-            <a href="{% url 'create_booking' room.id %}?check_in={{ check_in }}&check_out={{ check_out }}">Book</a>
-        </li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>No rooms available.</p>
+{% if error %}
+    <div class="alert alert-danger" role="alert" aria-live="assertive">
+        {{ error }}
+    </div>
 {% endif %}
 
+<section aria-labelledby="available-rooms-heading">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
+        <div>
+            <h2 id="available-rooms-heading" class="h3 mb-1">Available rooms</h2>
+            <p class="text-muted mb-0">Review room details and continue to booking when dates are valid.</p>
+        </div>
+        <div id="availability-summary" class="badge text-bg-light border rounded-pill px-3 py-2" aria-live="polite">
+            {{ rooms|length }} room{{ rooms|length|pluralize }} shown
+        </div>
+    </div>
 
+    {% if rooms %}
+        <div class="row g-4" data-room-results>
+            {% for room in rooms %}
+                <div class="col-md-6 col-xl-4">
+                    <article class="card h-100 border-0 shadow-sm rounded-4">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                                <div>
+                                    <h3 class="h5 mb-1">Room {{ room.room_number }}</h3>
+                                    <p class="text-muted mb-0">{{ room.room_type.room_type_name }} room</p>
+                                </div>
+                                <span class="badge text-bg-success-subtle text-success-emphasis border">Available</span>
+                            </div>
+                            <dl class="room-meta mb-4">
+                                <div>
+                                    <dt>Occupancy</dt>
+                                    <dd>{{ room.room_type.max_occupancy }} guest{{ room.room_type.max_occupancy|pluralize }}</dd>
+                                </div>
+                                <div>
+                                    <dt>Rate</dt>
+                                    <dd>${{ room.room_type.price_per_night }} per night</dd>
+                                </div>
+                            </dl>
+                            <a class="btn btn-outline-primary w-100" href="{% url 'create_booking' room.id %}?check_in={{ check_in }}&check_out={{ check_out }}">
+                                Book this room
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state rounded-4 p-4 p-lg-5 text-center">
+            <h3 class="h4">No rooms available</h3>
+            <p class="text-muted mb-0">Try a different date range to see more options.</p>
+        </div>
+    {% endif %}
+</section>
 
 {% endblock %}

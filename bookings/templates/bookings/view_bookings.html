@@ -1,29 +1,65 @@
 {% extends "base.html" %}
 
+{% block title %}My Bookings | Hotel Management System{% endblock %}
+
 {% block content %}
+<section class="mb-4">
+    <p class="eyebrow mb-2">Reservations</p>
+    <h1 class="mb-3">View bookings</h1>
+    <p class="text-muted mb-0">Guests can review their stay details here. Receptionists and admins can also update reservation status.</p>
+</section>
 
-<h1>View Bookings</h1>
 {% if bookings %}
-<ul>
-    {% for booking in bookings%}
-        <li>
-            Room {{ booking.room.room_number }} | User: {{ booking.user.username }} |
-            {{ booking.check_in_date }} to {{ booking.check_out_date }} | {{ booking.booking_status }}
-            
-            {% if request.user.role and request.user.role.role_name in "admin receptionist" %}
-                <br>
-                <a href="{% url 'change_booking_status' booking.id 'checked_in' %}" >Check In</a>
-                <a href = "{% url 'change_booking_status' booking.id 'checked_out' %}" >Check Out</a>
-                <a href="{% url 'change_booking_status' booking.id 'cancelled' %}">Cancel</a>
-            {% endif %}
-
-        </li>
-        {% endfor %}
-
-</ul>
-{%else%}
-<p>No Bookings</p>
-{%endif%}
-
+    <section class="card border-0 shadow-sm rounded-4 overflow-hidden" aria-labelledby="bookings-table-heading">
+        <div class="card-body border-bottom">
+            <h2 id="bookings-table-heading" class="h4 mb-1">Booking list</h2>
+            <p class="text-muted mb-0">{{ bookings|length }} booking{{ bookings|length|pluralize }} displayed.</p>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Room</th>
+                        <th scope="col">Guest</th>
+                        <th scope="col">Dates</th>
+                        <th scope="col">Status</th>
+                        {% if request.user.role and request.user.role.role_name == "admin" or request.user.role and request.user.role.role_name == "receptionist" %}
+                            <th scope="col">Actions</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                        <tr>
+                            <th scope="row">Room {{ booking.room.room_number }}</th>
+                            <td>{{ booking.user.username }}</td>
+                            <td>{{ booking.check_in_date }} to {{ booking.check_out_date }}</td>
+                            <td>
+                                <span class="status-pill status-{{ booking.booking_status|slugify }}">
+                                    {{ booking.get_booking_status_display }}
+                                </span>
+                            </td>
+                            {% if request.user.role and request.user.role.role_name == "admin" or request.user.role and request.user.role.role_name == "receptionist" %}
+                                <td>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <a class="btn btn-sm btn-outline-primary" href="{% url 'change_booking_status' booking.id 'checked_in' %}">Check in</a>
+                                        <a class="btn btn-sm btn-outline-secondary" href="{% url 'change_booking_status' booking.id 'checked_out' %}">Check out</a>
+                                        <a class="btn btn-sm btn-outline-danger" href="{% url 'change_booking_status' booking.id 'cancelled' %}">Cancel</a>
+                                    </div>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% else %}
+    <div class="empty-state rounded-4 p-4 p-lg-5 text-center">
+        <h2 class="h4">No bookings found</h2>
+        <p class="text-muted mb-3">Once a room is reserved, it will appear here for quick review.</p>
+        <a class="btn btn-accent" href="{% url 'search_rooms' %}">Search for rooms</a>
+    </div>
+{% endif %}
 
 {% endblock %}

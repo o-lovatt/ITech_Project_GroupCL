@@ -1,11 +1,22 @@
 {% extends "base.html" %}
 
+{% block title %}Booking Error | Hotel Management System{% endblock %}
+
 {% block content %}
-
-<h1>Booking Error</h1>
-
-<p>{{ error }}</p>
-
-<a href="{% url 'search_rooms' %}">Back to Search Available Rooms</a>
+<section class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4 p-lg-5 text-center">
+                <p class="eyebrow mb-2">Booking Issue</p>
+                <h1 class="h2 mb-3">We could not complete that booking</h1>
+                <div class="alert alert-danger text-start" role="alert" aria-live="assertive">
+                    {{ error }}
+                </div>
+                <p class="text-muted mb-4">Please return to the search page and choose a different room or date range.</p>
+                <a class="btn btn-accent" href="{% url 'search_rooms' %}">Back to room search</a>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}
