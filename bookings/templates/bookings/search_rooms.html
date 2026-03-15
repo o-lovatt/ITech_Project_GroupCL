@@ -89,7 +89,7 @@
                                 </div>
                                 <div>
                                     <dt>Rate</dt>
-                                    <dd>${{ room.room_type.price_per_night }} per night</dd>
+                                    <dd>£{{ room.room_type.price_per_night }} per night</dd>
                                 </div>
                             </dl>
                             <a class="btn btn-outline-primary w-100" href="{% url 'create_booking' room.id %}?check_in={{ check_in }}&check_out={{ check_out }}">
