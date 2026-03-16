@@ -5,14 +5,14 @@
 {% block content %}
 <section class="mb-4">
     <p class="eyebrow mb-2">Reservations</p>
-    <h1 class="mb-3">View bookings</h1>
-    <p class="text-muted mb-0">Guests can review their stay details here. Receptionists and admins can also update reservation status.</p>
+    <h1 class="mb-3">View Bookings</h1>
+    <p class="text-muted mb-0">Review your reservation details here.</p>
 </section>
 
 {% if bookings %}
     <section class="card border-0 shadow-sm rounded-4 overflow-hidden" aria-labelledby="bookings-table-heading">
         <div class="card-body border-bottom">
-            <h2 id="bookings-table-heading" class="h4 mb-1">Booking list</h2>
+            <h2 id="bookings-table-heading" class="h4 mb-1">My Bookings</h2>
             <p class="text-muted mb-0">{{ bookings|length }} booking{{ bookings|length|pluralize }} displayed.</p>
         </div>
         <div class="table-responsive">
@@ -57,7 +57,7 @@
 {% else %}
     <div class="empty-state rounded-4 p-4 p-lg-5 text-center">
         <h2 class="h4">No bookings found</h2>
-        <p class="text-muted mb-3">Once a room is reserved, it will appear here for quick review.</p>
+        <p class="text-muted mb-3">Once a room is reserved, it will appear here.</p>
         <a class="btn btn-accent" href="{% url 'search_rooms' %}">Search for rooms</a>
     </div>
 {% endif %}

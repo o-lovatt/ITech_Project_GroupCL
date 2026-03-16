@@ -5,7 +5,7 @@
 {% block content %}
 <section class="mb-4">
     <p class="eyebrow mb-2">Booking Search</p>
-    <h1 class="mb-3">Search available rooms</h1>
+    <h1 class="mb-3">Search Available Rooms</h1>
     <p class="text-muted mb-0">Choose your check-in and check-out dates to review room availability and create a booking.</p>
 </section>
 
@@ -13,7 +13,7 @@
     <div class="card-body p-4">
         <form method="get" class="row g-3 align-items-end" data-booking-form novalidate aria-describedby="date-range-help date-range-feedback">
             <div class="col-md-5">
-                <label class="form-label" for="check-in-date">Check-in date</label>
+                <label class="form-label" for="check-in-date">Check-in</label>
                 <input
                     type="date"
                     name="check_in"
@@ -27,7 +27,7 @@
             </div>
 
             <div class="col-md-5">
-                <label class="form-label" for="check-out-date">Check-out date</label>
+                <label class="form-label" for="check-out-date">Check-out</label>
                 <input
                     type="date"
                     name="check_out"
@@ -45,7 +45,7 @@
             </div>
 
             <div class="col-12">
-                <p id="date-range-help" class="form-text mb-0">After searching, available rooms will appear below with one-click booking links.</p>
+                <p id="date-range-help" class="form-text mb-0">After searching, available rooms will appear below.</p>
                 <div id="date-range-feedback" class="small mt-2" aria-live="polite"></div>
             </div>
         </form>
@@ -61,8 +61,8 @@
 <section aria-labelledby="available-rooms-heading">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
         <div>
-            <h2 id="available-rooms-heading" class="h3 mb-1">Available rooms</h2>
-            <p class="text-muted mb-0">Review room details and continue to booking when dates are valid.</p>
+            <h2 id="available-rooms-heading" class="h3 mb-1">Available Rooms</h2>
+            <p class="text-muted mb-0">Review room details and continue to booking.</p>
         </div>
         <div id="availability-summary" class="badge text-bg-light border rounded-pill px-3 py-2" aria-live="polite">
             {{ rooms|length }} room{{ rooms|length|pluralize }} shown
