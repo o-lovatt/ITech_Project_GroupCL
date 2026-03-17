@@ -9,15 +9,26 @@ def create_default_admin(apps, schema_editor):
 
     role, _ = Role.objects.get_or_create(role_name="Admin")
 
-    if not User.objects.filter(username="admin").exists():
-        User.objects.create(
-            username="admin",
-            password=make_password("admin123"),
-            role=role,
-            is_staff=True,
-            is_superuser=True,
-            is_active=True,
-        )
+    user, created = User.objects.get_or_create(
+        username="admin",
+        defaults={
+            "role": role,
+            "is_staff": True,
+            "is_superuser": True,
+            "is_active": True,
+            "email": "admin@gmail.com",
+            "password": make_password("admin123"),
+        },
+    )
+
+    if not created:
+        user.role = role
+        user.is_staff = True
+        user.is_superuser = True
+        user.is_active = True
+        user.email = "admin@gmail.com"
+        user.password = make_password("admin123")
+        user.save()
 
 
 def remove_default_admin(apps, schema_editor):
@@ -28,7 +39,7 @@ def remove_default_admin(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accounts', '0002_alter_user_role'),
+        ("accounts", "0002_alter_user_role"),
     ]
 
     operations = [
