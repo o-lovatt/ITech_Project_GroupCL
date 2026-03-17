@@ -21,7 +21,7 @@ from django.db.utils import OperationalError
 def create_default_admin():
     try:
         if not User.objects.filter(username="admin").exists():
-            role, created = Role.objects.get_or_create(role_name="Admin")
+            role, created = Role.objects.get_or_create(role_name="admin")
 
             User.objects.create(
                 username="admin",
@@ -32,6 +32,25 @@ def create_default_admin():
                 is_active=True
             )
             print("Default admin user created")
+
+    except OperationalError:
+        pass
+
+
+def create_default_guest():
+    try:
+        if not User.objects.filter(username="guest").exists():
+            role, created = Role.objects.get_or_create(role_name="guest")
+
+            User.objects.create(
+                username="guest",
+                password=make_password("guest123"),
+                role=role,
+                is_staff=False,
+                is_superuser=False,
+                is_active=True
+            )
+            print("Default guest user created")
 
     except OperationalError:
         pass

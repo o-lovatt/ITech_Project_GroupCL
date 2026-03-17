@@ -5,8 +5,9 @@ class AccountsConfig(AppConfig):
     name = 'accounts'
 
     def ready(self):
-        from .models import create_default_admin
+        from .models import create_default_admin, create_default_guest
         create_default_admin()
+        create_default_guest()
 
 # from django.apps import AppConfig
 

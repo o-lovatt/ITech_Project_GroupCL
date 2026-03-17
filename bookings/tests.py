@@ -22,11 +22,11 @@ class BookeingTest(TestCase):
         test_booking.clean()#.clean runs validation like overlapping etc
         test_booking.save()#.save save the object to the test database
         self.assertEqual(Booking.objects.count(), 1)   #this test is failing?? AssertionError: 0 != 1      
-        #^^ now fixed, needed to add 'date' to   (2026, 3, 2)          
+        #^^ now fixed, needed to add 'date' to (2026, 3, 2) & (2026, 3, 3)
 
 
 
-    #test check out date can't come befor check in 
+    #test check out date can't come before check in 
     def test_checkout_date(self):
         test_booking = Booking(user = self.user, room = self.room, check_in_date = date(2026, 3, 2), check_out_date = date(2026, 3, 1))
         with self.assertRaises(ValidationError):

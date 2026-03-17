@@ -2,7 +2,7 @@ from django.test import TestCase
 from accounts.models import Role, User
 # Create your tests here.
 
-#create user test
+#create role test
 class Roletest(TestCase):
     def test_role_creation(self):
         test_role = Role.objects.create(role_name = "Guest")
